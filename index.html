@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실무 엑셀/구글시트 진단 - 고수 이현지</title>
+    <style>
+      body {
+        font-family: "Pretendard", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f5f7fa;
+      }
+      .card {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      .section {
+        margin-bottom: 25px;
+      }
+      .section-title {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        color: #34495e;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        cursor: pointer;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-sizing: border-box;
+      }
+      button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      button:hover {
+        background: #2980b9;
+      }
+      #resultArea {
+        margin-top: 20px;
+        display: none;
+      }
+      textarea {
+        width: 100%;
+        height: 120px;
+        font-family: monospace;
+        padding: 10px;
+        background: #eee;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>📊 실무 역량 사전 진단</h2>
+      <p>현지 님, 1분만 투자해 주세요! 맞춤 커리큘럼을 준비해 드릴게요.</p>
+
+      <form id="diagForm">
+        <div class="section">
+          <span class="section-title">1. 주로 사용하는 도구</span>
+          <label
+            ><input type="radio" name="tool" value="Excel" required /> 엑셀
+            (Excel)</label
+          >
+          <label
+            ><input type="radio" name="tool" value="GoogleSheets" /> 구글 시트
+            (Google Sheets)</label
+          >
+          <label
+            ><input type="radio" name="tool" value="Both" /> 둘 다 병행</label
+          >
+        </div>
+
+        <div class="section">
+          <span class="section-title">2. 현재 가능한 작업 (모두 선택)</span>
+          <label
+            ><input type="checkbox" name="skill" value="basic_format" /> 셀
+            병합, 테두리 등 기본 편집</label
+          >
+          <label
+            ><input type="checkbox" name="skill" value="basic_fn" /> SUM,
+            AVERAGE 등 기초 함수</label
+          >
+          <label
+            ><input type="checkbox" name="skill" value="lookup_fn" /> IF,
+            VLOOKUP 등 참조 함수</label
+          >
+          <label
+            ><input type="checkbox" name="skill" value="pivot_aware" /> 피벗
+            테이블 개념 이해</label
+          >
+        </div>
+
+        <div class="section">
+          <span class="section-title"
+            >3. 평소 업무 스타일 (해당되는 것 선택)</span
+          >
+          <label
+            ><input type="checkbox" name="habit" value="merge_heavy" /> 보고서
+            가독성을 위한 셀 병합 선호</label
+          >
+          <label
+            ><input type="checkbox" name="habit" value="manual_input" />
+            함수보다 직접 입력/복사가 편함</label
+          >
+          <label
+            ><input type="checkbox" name="habit" value="subtotal_row" /> 데이터
+            중간에 합계 행을 직접 삽입</label
+          >
+          <label
+            ><input type="checkbox" name="habit" value="color_tag" /> 색상으로
+            데이터를 분류/관리</label
+          >
+        </div>
+
+        <button type="button" onclick="generateJSON()">
+          진단 완료 및 결과 복사하기
+        </button>
+      </form>
+
+      <div id="resultArea">
+        <span class="section-title"
+          >아래 코드를 복사해서 채팅창에 보내주세요!</span
+        >
+        <textarea id="jsonOutput" readonly></textarea>
+        <p style="font-size: 12px; color: #e74c3c">
+          * 결과가 자동으로 복사되었습니다. 채팅창에 붙여넣기(Ctrl+V) 해주세요.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      function generateJSON() {
+        const form = document.getElementById("diagForm");
+        const formData = new FormData(form);
+        const result = {
+          timestamp: new Date().toLocaleString(),
+          tool: formData.get("tool"),
+          skills: formData.getAll("skill"),
+          habits: formData.getAll("habit"),
+        };
+
+        const jsonStr = JSON.stringify(result, null, 2);
+        const output = document.getElementById("jsonOutput");
+        output.value = jsonStr;
+        document.getElementById("resultArea").style.display = "block";
+
+        output.select();
+        document.execCommand("copy");
+        alert("진단 결과가 복사되었습니다! 채팅창에 붙여넣어 주세요.");
+      }
+    </script>
+  </body>
+</html>
