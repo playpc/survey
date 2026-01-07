@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>실무 엑셀/구글시트 진단 - 고수 이현지</title>
+    <title>실무 엑셀/구글시트 진단 - A</title>
     <style>
       body {
         font-family: "Pretendard", sans-serif;
@@ -74,7 +74,7 @@
   <body>
     <div class="card">
       <h2>📊 실무 역량 사전 진단</h2>
-      <p>현지 님, 1분만 투자해 주세요! 맞춤 커리큘럼을 준비해 드릴게요.</p>
+      <p>안녕하세요, 1분만 투자해 주세요! 맞춤 커리큘럼을 준비해 드릴게요.</p>
 
       <form id="diagForm">
         <div class="section">
@@ -134,6 +134,28 @@
           >
         </div>
 
+        <div class="section">
+          <span class="section-title"
+            >4. 주로 다루는 데이터 유형 (중복 선택 가능)</span
+          >
+          <label
+            ><input type="checkbox" name="data_type" value="sales_finance" />
+            매출, 정산 등 숫자 중심 데이터</label
+          >
+          <label
+            ><input type="checkbox" name="data_type" value="customer_list" />
+            고객 명단, 회원 정보 등 텍스트 데이터</label
+          >
+          <label
+            ><input type="checkbox" name="data_type" value="raw_data" /> 외부
+            시스템에서 다운로드한 로우 데이터(CSV)</label
+          >
+          <label
+            ><input type="checkbox" name="data_type" value="schedule_task" />
+            일정 관리 및 업무 체크리스트</label
+          >
+        </div>
+
         <button type="button" onclick="processDiagnosis()">
           진단 완료 및 전송하기
         </button>
@@ -173,11 +195,12 @@
           tool: formData.get("tool"),
           skills: formData.getAll("skill"),
           habits: formData.getAll("habit"),
+          data_types: formData.getAll("data_type"),
         };
 
         const jsonStr = JSON.stringify(result, null, 2);
         const GAS_URL =
-          "https://script.google.com/macros/s/AKfycbwGdVk4tyh84uoyskm6yZUIAiFVSBmZ2ASVgUSgXdi3yttbFzXbmfu6Fg_vlM78N6ux/exec";
+          "https://script.google.com/macros/s/AKfycbwFr1eBE12Pvuhh2MjPoldK24yrxwciAhPhSHYi76hkfogGgS63UBzdNK1ZQf8cgMB9/exec";
 
         // 플랜 A: 구글 시트 전송
         fetch(GAS_URL, {
